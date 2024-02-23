@@ -1,1 +1,1 @@
-# 2024_PEOO_T2
+# Repositório da Disciplina de POO do InfoWeb 2024
