@@ -6,7 +6,7 @@ class Triangulo:
         return self.b * self.h / 2
 
 x = Triangulo()
-x.b = 10
+x.b = -10
 x.h = 20
 
 y = Triangulo()
