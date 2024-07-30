@@ -19,22 +19,25 @@ class Bingo:
         return n
     def sorteados(self):
         return sorted(self.__sorteados)
+    def __str__(self):
+        return f"Foram sorteadas {len(self.__sorteados)} do total de {self.__numBolas} bolas"
     
 class UI:
     @staticmethod
     def menu():
-        print("1-Iniciar Jogo, 2-Próximo, 3-Sorteados, 4-Fim")
+        print("1-Iniciar Jogo, 2-Próximo, 3-Sorteados, 4-Info, 5-Fim")
         return int(input("Escolha uma opção: "))
     @staticmethod
     def main():
         b = Bingo()
         print("Bem-vindo(a) ao IF Bingo")
         op = 0
-        while op != 4:
+        while op != 5:
             op = UI.menu()
             if op == 1: UI.iniciar_jogo(b)
             if op == 2: UI.proximo(b)
             if op == 3: UI.sorteados(b)
+            if op == 4: UI.info(b)
         print("Bye")
     @staticmethod
     def iniciar_jogo(b):
@@ -46,5 +49,6 @@ class UI:
     @staticmethod
     def sorteados(b):        
         print(b.sorteados())
-        
+    def info(b):        
+        print(b)
 UI.main()
