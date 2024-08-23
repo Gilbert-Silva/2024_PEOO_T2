@@ -58,12 +58,15 @@ class Clientes:
   @classmethod
   def abrir(cls):
     cls.objetos = []
-    with open("clientes.json", mode = "r") as arquivo:   # read
-      texto = json.load(arquivo)
-      for obj in texto:
-        c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])                     # dicionário
-        cls.objetos.append(c)
-
+    try: 
+      with open("clientes.json", mode = "r") as arquivo:   # read
+        texto = json.load(arquivo)
+        for obj in texto:
+          c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])                     # dicionário
+          cls.objetos.append(c)
+    except FileNotFoundError:
+      pass
+    
 # Visão
 class UI:
   @staticmethod
