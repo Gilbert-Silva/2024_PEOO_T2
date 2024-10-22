@@ -1,6 +1,6 @@
-from cliente import Cliente, Clientes
-from horario import Horario, Horarios
+from models.horario import Horario, Horarios
 from datetime import datetime
+from views import View
 
 #Visão
 class UI:
@@ -33,8 +33,9 @@ class UI:
     nome = input("Informe o nome: ")
     email = input("Informe o e-mail: ")
     fone = input("Informe o fone: ")
-    c = Cliente(0, nome, email, fone)
-    Clientes.inserir(c)
+    View.cliente_inserir(nome, email, fone)
+    #c = Cliente(0, nome, email, fone)
+    #Clientes.inserir(c)
 
   @staticmethod
   def horario_inserir():
@@ -45,8 +46,8 @@ class UI:
 
   @staticmethod
   def cliente_listar():
-    for c in Clientes.listar():
-      print(c)
+    for c in View.cliente_listar(): print(c)
+    #for c in Clientes.listar(): print(c)
 
   @staticmethod
   def horario_listar():
@@ -60,8 +61,9 @@ class UI:
     nome = input("Informe o novo nome: ")
     email = input("Informe o novo e-mail: ")
     fone = input("Informe o novo fone: ")
-    c = Cliente(id, nome, email, fone)
-    Clientes.atualizar(c)
+    View.cliente_atualizar(id, nome, email, fone)
+    #c = Cliente(id, nome, email, fone)
+    #Clientes.atualizar(c)
 
   @staticmethod
   def horario_atualizar():
@@ -71,8 +73,9 @@ class UI:
   def cliente_excluir():
     UI.cliente_listar()
     id = int(input("Informe o id do cliente a ser excluído: "))
-    c = Cliente(id, "", "", "")
-    Clientes.excluir(c)
+    View.cliente_excluir(id)
+    #c = Cliente(id, "", "", "")
+    #Clientes.excluir(c)
 
   @staticmethod
   def horario_excluir():
