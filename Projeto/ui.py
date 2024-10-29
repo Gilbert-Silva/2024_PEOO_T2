@@ -1,23 +1,24 @@
-from models.horario import Horario, Horarios
-from datetime import datetime
+#from cliente import Cliente, Clientes
+#from horario import Horario, Horarios
 from views import View
+from datetime import datetime
 
-#Visão
 class UI:
   @staticmethod
   def menu():
     print("Cadastro de Clientes")
-    print("  1 - Inserir, 2 - listar, 3 - atualizar, 4 - excluir")
+    print("  1 - Inserir, 2 - Listar, 3 - Atualizar , 4 - Excluir")
     print("Cadastro de Horários")
-    print("  5 - Inserir, 6 - listar, 7 - atualizar, 8 - excluir")
+    print("  5 - Inserir, 6 - Listar, 7 - Atualizar , 8 - Excluir")
     print("Outras opções")
     print("  9 - Fim")
+
     return int(input("Informe uma opção: "))
 
   @staticmethod
   def main():
     op = 0
-    while op != 9: 
+    while op != 9:
       op = UI.menu()
       if op == 1: UI.cliente_inserir()
       if op == 2: UI.cliente_listar()
@@ -33,25 +34,26 @@ class UI:
     nome = input("Informe o nome: ")
     email = input("Informe o e-mail: ")
     fone = input("Informe o fone: ")
-    View.cliente_inserir(nome, email, fone)
     #c = Cliente(0, nome, email, fone)
-    #Clientes.inserir(c)
+    #Clientes.inserir(c)    
+    View.cliente_inserir(nome, email, fone)
 
   @staticmethod
   def horario_inserir():
-    datastr = input("Informe a data e o horário no formato dd/mm/aaaa hh:mm: ")
+    datastr = input("Informe uma data e horário no formato dd/mm/aaaa hh:mm: ")
     data = datetime.strptime(datastr, "%d/%m/%Y %H:%M")
-    c = Horario(0, data)
-    Horarios.inserir(c)
+    #c = Horario(0, data)
+    #Horarios.inserir(c)
+    View.horario_inserir(data)
 
   @staticmethod
-  def cliente_listar():
-    for c in View.cliente_listar(): print(c)
-    #for c in Clientes.listar(): print(c)
+  def cliente_listar():  
+    for c in View.cliente_listar():
+      print(c)
 
   @staticmethod
-  def horario_listar():
-    for c in Horarios.listar():
+  def horario_listar():  
+    for c in View.horario_listar():
       print(c)
 
   @staticmethod
@@ -62,29 +64,19 @@ class UI:
     email = input("Informe o novo e-mail: ")
     fone = input("Informe o novo fone: ")
     View.cliente_atualizar(id, nome, email, fone)
-    #c = Cliente(id, nome, email, fone)
-    #Clientes.atualizar(c)
 
   @staticmethod
   def horario_atualizar():
     pass
-
+  
   @staticmethod
   def cliente_excluir():
     UI.cliente_listar()
     id = int(input("Informe o id do cliente a ser excluído: "))
-    View.cliente_excluir(id)
-    #c = Cliente(id, "", "", "")
-    #Clientes.excluir(c)
+    View.cliente_inserir(id)
 
   @staticmethod
   def horario_excluir():
     pass
   
-UI.main()    
-
-
-
-
-
-  
+UI.main()

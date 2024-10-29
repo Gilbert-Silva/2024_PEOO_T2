@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from views import View
+import time
 
 class ManterClienteUI:
     def main():
@@ -11,12 +12,11 @@ class ManterClienteUI:
         with tab3: ManterClienteUI.atualizar()
         with tab4: ManterClienteUI.excluir()
 
-
     def listar():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
+        if len(clientes) == 0: 
             st.write("Nenhum cliente cadastrado")
-        else:
+        else:    
             #for obj in clientes: st.write(obj)
             dic = []
             for obj in clientes: dic.append(obj.__dict__)
@@ -30,29 +30,32 @@ class ManterClienteUI:
         if st.button("Inserir"):
             View.cliente_inserir(nome, email, fone)
             st.success("Cliente inserido com sucesso")
+            time.sleep(2)
             st.rerun()
 
     def atualizar():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
+        if len(clientes) == 0: 
             st.write("Nenhum cliente cadastrado")
         else:
-            op = st.selectbox("Atualização de clientes", clientes)
-            nome = st.text_input("Informe o novo nome do cliente", op.nome)
-            email = st.text_input("Informe o novo e-mail", op.email)
-            fone = st.text_input("Informe o novo fone", op.fone)
+            op = st.selectbox("Atualização de cliente", clientes)
+            nome = st.text_input("Informe o nome do cliente", op.nome)
+            email = st.text_input("Informe o e-mail", op.email)
+            fone = st.text_input("Informe o fone", op.fone)
             if st.button("Atualizar"):
                 View.cliente_atualizar(op.id, nome, email, fone)
                 st.success("Cliente atualizado com sucesso")
+                time.sleep(2)
                 st.rerun()
 
     def excluir():
         clientes = View.cliente_listar()
-        if len(clientes) == 0:
+        if len(clientes) == 0: 
             st.write("Nenhum cliente cadastrado")
         else:
-            op = st.selectbox("Exclusão de clientes", clientes)
+            op = st.selectbox("Exclusão de cliente", clientes)
             if st.button("Excluir"):
                 View.cliente_excluir(op.id)
                 st.success("Cliente excluído com sucesso")
+                time.sleep(2)
                 st.rerun()
