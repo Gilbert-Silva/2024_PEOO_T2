@@ -14,8 +14,8 @@ class View:
     def cliente_listar_id(id):
         return Clientes.listar_id(id)    
 
-    def cliente_atualizar(id, nome, email, fone):
-        c = Cliente(id, nome, email, fone)
+    def cliente_atualizar(id, nome, email, fone, senha):
+        c = Cliente(id, nome, email, fone, senha)
         Clientes.atualizar(c)
 
     def cliente_excluir(id):
