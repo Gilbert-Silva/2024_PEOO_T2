@@ -56,8 +56,8 @@ class ManterHorarioUI:
             confirmado = st.checkbox("Nova confirmação", op.confirmado)
             id_cliente = None if op.id_cliente in [0, None] else op.id_cliente
             id_servico = None if op.id_servico in [0, None] else op.id_servico
-            cliente = st.selectbox("Informe o novo cliente", clientes)
-            servico = st.selectbox("Informe o novo serviço", servicos)
+            cliente = st.selectbox("Informe o novo cliente", clientes, next((i for i, c in enumerate(clientes) if c.id == id_cliente), None))
+            servico = st.selectbox("Informe o novo serviço", servicos, next((i for i, s in enumerate(servicos) if s.id == id_servico), None))
             if st.button("Atualizar"):
                 View.horario_atualizar(op.id, datetime.strptime(data, "%d/%m/%Y %H:%M"),  confirmado, cliente.id, servico.id)
                 st.success("Horário atualizado com sucesso")
