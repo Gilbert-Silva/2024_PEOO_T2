@@ -1,8 +1,9 @@
 import streamlit as st
 
 st.write(st.session_state)
-nome = st.text_input("Nome", key="usuário")
+nome = st.text_input("Digite seu nome", key="usuário")
 st.write(st.session_state)
-senha = st.text_input("Senha")
-if st.button("Entrar"):
+if st.button("Entrar no sistema"):
     st.write(st.session_state)
+
+
