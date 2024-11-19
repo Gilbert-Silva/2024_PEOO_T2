@@ -62,6 +62,12 @@ class View:
         Horarios.excluir(c)    
 
     def horario_abrir_agenda(data, hora_inicio, hora_fim, intervalo):
+        dt = datetime.strptime(data, "%d/%m/%Y")
+        if dt.date() < datetime.now().date(): 
+            raise ValueError("Data não pode estar no passado")
+        if intervalo > 120: 
+            raise ValueError("Intervalo máximo é 120 min")
+
         #data = "05/11/2024"
         #inicio = "08:00"
         #fim = "12:00"
