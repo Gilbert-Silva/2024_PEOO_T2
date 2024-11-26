@@ -1,16 +1,17 @@
 from models.cliente import Cliente, Clientes
 from models.horario import Horario, Horarios
 from models.servico import Servico, Servicos
+from models.perfil import Perfil, Perfis
 from datetime import datetime, timedelta
 
 class View:
     def cliente_admin():
         for c in View.cliente_listar():
             if c.email == "admin": return
-        View.cliente_inserir("admin", "admin", "1234", "1234")
+        View.cliente_inserir("admin", "admin", "1234", "1234", 1)
 
-    def cliente_inserir(nome, email, fone, senha):
-        c = Cliente(0, nome, email, fone, senha)
+    def cliente_inserir(nome, email, fone, senha, id_perfil):
+        c = Cliente(0, nome, email, fone, senha, id_perfil)
         Clientes.inserir(c)
 
     def cliente_listar():
@@ -19,13 +20,33 @@ class View:
     def cliente_listar_id(id):
         return Clientes.listar_id(id)    
 
-    def cliente_atualizar(id, nome, email, fone, senha):
-        c = Cliente(id, nome, email, fone, senha)
+    def cliente_atualizar(id, nome, email, fone, senha, id_perfil):
+        c = Cliente(id, nome, email, fone, senha, id_perfil)
         Clientes.atualizar(c)
 
     def cliente_excluir(id):
-        c = Cliente(id, "", "", "", "")
+        c = Cliente(id, "", "", "", "", 0)
         Clientes.excluir(c)    
+
+
+    def perfil_inserir(nome, descricao, beneficios):
+        c = Perfil(0, nome, descricao, beneficios)
+        Perfis.inserir(c)
+
+    def perfil_listar():
+        return Perfis.listar()    
+
+    def perfil_listar_id(id):
+        return Perfis.listar_id(id)    
+
+    def perfil_atualizar(id, nome, descricao, beneficios):
+        c = Perfil(id, nome, descricao, beneficios)
+        Perfis.atualizar(c)
+
+    def perfil_excluir(id):
+        c = Perfil(id, "", "", "")
+        Perfis.excluir(c)    
+
 
     def cliente_autenticar(email, senha):
         for c in View.cliente_listar():

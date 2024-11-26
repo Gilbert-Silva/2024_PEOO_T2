@@ -7,19 +7,17 @@
 import json
 
 # Modelo
-class Cliente:
-  def __init__(self, id, nome, email, fone, senha, id_perfil):
+class Perfil:
+  def __init__(self, id, nome, descricao, beneficios):
     self.id = id
     self.nome = nome
-    self.email = email
-    self.fone = fone
-    self.senha = senha
-    self.id_perfil = id_perfil
+    self.descricao = descricao
+    self.beneficios = beneficios
   def __str__(self):
-    return f"{self.nome} - {self.email} - {self.fone} - {self.id_perfil}"
+    return f"{self.nome} - {self.descricao} - {self.beneficios}"
 
 # Persistência
-class Clientes:
+class Perfis:
   objetos = []    # atributo estático
 
   @classmethod
@@ -44,10 +42,8 @@ class Clientes:
     c = cls.listar_id(obj.id)
     if c != None:
       c.nome = obj.nome
-      c.email = obj.email
-      c.fone = obj.fone
-      c.senha = obj.senha
-      c.id_perfil = obj.id_perfil
+      c.descricao = obj.descricao
+      c.beneficios = obj.beneficios
       cls.salvar()
 
   @classmethod
@@ -60,22 +56,22 @@ class Clientes:
   @classmethod
   def listar(cls):
     cls.abrir()
-    cls.objetos.sort(key=lambda cliente: cliente.nome)
+    cls.objetos.sort(key=lambda x : x.nome)
     return cls.objetos
 
   @classmethod
   def salvar(cls):
-    with open("clientes.json", mode="w") as arquivo:   # w - write
+    with open("perfis.json", mode="w") as arquivo:   # w - write
       json.dump(cls.objetos, arquivo, default = vars)
 
   @classmethod
   def abrir(cls):
     cls.objetos = []
     try:
-      with open("clientes.json", mode="r") as arquivo:   # r - read
+      with open("perfis.json", mode="r") as arquivo:   # r - read
         texto = json.load(arquivo)
         for obj in texto:   
-          c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"], obj["senha"], obj["id_perfil"])
+          c = Perfil(obj["id"], obj["nome"], obj["descricao"], obj["beneficios"])
           cls.objetos.append(c)
     except FileNotFoundError:
       pass
