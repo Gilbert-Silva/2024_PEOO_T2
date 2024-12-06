@@ -2,6 +2,7 @@ from models.cliente import Cliente, Clientes
 from models.horario import Horario, Horarios
 from models.servico import Servico, Servicos
 from models.perfil import Perfil, Perfis
+from models.profissional import Profissional, Profissionais
 from datetime import datetime, timedelta
 
 class View:
@@ -47,22 +48,54 @@ class View:
         c = Perfil(id, "", "", "")
         Perfis.excluir(c)    
 
-
     def cliente_autenticar(email, senha):
         for c in View.cliente_listar():
             if c.email == email and c.senha == senha:
                 return {"id" : c.id, "nome" : c.nome }
         return None
 
-    def horario_inserir(data, confirmado, id_cliente, id_servico):
+    def profissional_autenticar(email, senha):
+        for c in View.profissional_listar():
+            if c.email == email and c.senha == senha:
+                return {"id" : c.id, "nome" : c.nome }
+        return None
+
+    def profissional_inserir(nome, especialidade, conselho, email, senha):
+        c = Profissional(0, nome, especialidade, conselho, email, senha)
+        Profissionais.inserir(c)
+
+    def profissional_listar():
+        return Profissionais.listar()    
+
+    def profissional_listar_id(id):
+        return Profissionais.listar_id(id)    
+
+    def profissional_atualizar(id, nome, especialidade, conselho, email, senha):
+        c = Profissional(id, nome, especialidade, conselho, email, senha)
+        Profissionais.atualizar(c)
+
+    def profissional_excluir(id):
+        c = Profissional(id, "", "", "")
+        Profissionais.excluir(c) 
+
+
+    def horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional):
         c = Horario(0, data)
         c.confirmado = confirmado
         c.id_cliente = id_cliente
         c.id_servico = id_servico
+        c.id_profissional = id_profissional
         Horarios.inserir(c)
 
     def horario_listar():
         return Horarios.listar()    
+
+    def horario_pesquisar(id_profissional):
+        r = []
+        horarios = Horarios.listar()
+        for h in horarios:
+            if h.id_profissional == id_profissional: r.append(h)
+        return r       
 
     def horario_listar_disponiveis():
         horarios = View.horario_listar()
@@ -71,11 +104,12 @@ class View:
             if h.data >= datetime.now() and h.id_cliente == None: disponiveis.append(h)
         return disponiveis   
 
-    def horario_atualizar(id, data, confirmado, id_cliente, id_servico):
+    def horario_atualizar(id, data, confirmado, id_cliente, id_servico, id_profissional):
         c = Horario(id, data)
         c.confirmado = confirmado
         c.id_cliente = id_cliente
         c.id_servico = id_servico
+        c.id_profissional = id_profissional
         Horarios.atualizar(c)
 
     def horario_excluir(id):
@@ -83,16 +117,16 @@ class View:
         Horarios.excluir(c)    
 
     def horario_abrir_agenda(data, hora_inicio, hora_fim, intervalo):
+        #data = "05/11/2024"
+        #inicio = "08:00"
+        #fim = "12:00"
+        #intervalo = 60
         dt = datetime.strptime(data, "%d/%m/%Y")
         if dt.date() < datetime.now().date(): 
             raise ValueError("Data não pode estar no passado")
         if intervalo > 120: 
             raise ValueError("Intervalo máximo é 120 min")
 
-        #data = "05/11/2024"
-        #inicio = "08:00"
-        #fim = "12:00"
-        #intervalo = 60
         i = data + " " + hora_inicio   # "05/11/2024 08:00"
         f = data + " " + hora_fim      # "05/11/2024 12:00"
         d = timedelta(minutes=intervalo)
@@ -101,9 +135,10 @@ class View:
         x = di
         while x <= df:
             #cadastrar o horário x
-            View.horario_inserir(x, False, None, None)
+            View.horario_inserir(x, False, None, None, None)
             #passar para o próximo horário
             x = x + d
+
 
     def servico_inserir(descricao, valor, duracao):
         c = Servico(0, descricao, valor, duracao)
